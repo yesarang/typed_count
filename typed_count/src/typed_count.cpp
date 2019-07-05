@@ -13,8 +13,8 @@ int main()
 	// szlen type is char_count
 	auto szlen = str_len_s(psz);
 
-	auto pNewWsz = construct_array(wszlen + 1_wch);
-	auto pNewSz = construct_array(szlen + 1_ch);
+	auto pNewWsz = make_array(wszlen + 1_wch);
+	auto pNewSz = make_array(szlen + 1_ch);
 
 	// This must not compile since szlen is not the type which str_cpy_s(... wchar_count) requires
 	// str_cpy_s(pwsz, pNewWsz, szlen);
@@ -41,8 +41,8 @@ int main()
 
 	constexpr page_count no_of_pages{ 128 };
 	cout << "pages = " << no_of_pages << endl;
-	cout << "pages to kb = " << no_of_pages.to_count_of<kb>() << endl;
-	cout << "pages to mb = " << no_of_pages.to_count_of<mb>() << endl;
+	cout << "pages to kb = " << no_of_pages.to_count_of<Kb>() << endl;
+	cout << "pages to mb = " << no_of_pages.to_count_of<Mb>() << endl;
 	cout << "pages to bytes = " << no_of_pages.to_count_of<byte>() << endl;
 
 	safe_array<const wchar_t> cwsz{ L"EFGHI", wcslen(L"EFGHI") + 1 };
@@ -55,5 +55,19 @@ int main()
 
 	assert(wcscmp(cwsz2, wsz2) == 0 && wcscmp(L"EFGHI", wsz2) == 0);
 	assert(cwsz2.count() == wsz2.count() && wsz2.count() == 6_wch);
+
+	const safe_array<char> pOrgData{new char[10], 10};
+	char_count i = 0_ch;
+	pOrgData[i++] = 'A';
+	*(pOrgData + i) = 'B';
+	safe_array<char> pCurData = pOrgData;
+	pCurData += 2_ch;
+	pCurData[0_ch] = 'C';
+	++pCurData;
+	*pCurData = 'D';
+	if (pOrgData)
+	{
+		delete[] pOrgData;
+	}
 }
 
