@@ -22,7 +22,9 @@ namespace typed_count
 //! need to define a separate unit_traits using template specialization.
 //!
 //! Usage:
+//! @code{.cpp}
 //!     size_t unit_size = unit_traits<Unit>::size::value;
+//! @endcode
 template <typename T>
 struct unit_traits
 {
@@ -101,6 +103,10 @@ struct unit_traits<Tb>
 };
 
 //! @}
+
+//! @defgroup core_classes Core classes
+//! Core classes to provide type-safe unit count.
+//! @{
 
 //! A holder of count value.
 //!
@@ -363,7 +369,9 @@ public:
 	//! @}
 };
 
-//! @name operators
+//! @}
+
+//! @defgroup operators Operators
 //! overloaded non-member operators.
 //! @{
 
@@ -458,8 +466,8 @@ constexpr T*& operator -=(T*& p, count_of<T> distance) noexcept
 
 //! @}
 
-//! @name typedefs
-//! typedefs for common units
+//! @defgroup typedefs Typedefs
+//! typedefs for common units like byte, char, wchar_t, Page, Kb, Mb, and etc.
 //! @{
 
 using byte_count = count_of<std::byte>;
@@ -473,7 +481,7 @@ using tb_count = count_of<Tb>;
 
 //! @}
 
-//! @name literals
+//! @defgroup literals Literals
 //! literal operators
 //! @{
 
@@ -527,6 +535,9 @@ constexpr gb_count operator "" _tb(unsigned long long count) noexcept
 
 //! @}
 
+//! @defgroup utilities Utilities
+//! Utility functions and classes
+//! @{
 template <typename T, std::size_t N>
 constexpr count_of<T> array_size(T(&)[N]) noexcept
 {
@@ -565,7 +576,8 @@ struct fixed_size_array
 //! decaying to a plan pointer, and deferencing just like a pointer.
 //! safe_array does not own the pointed-to array.
 //!
-//! #### Usage ####
+//! <h4>Usage </h4>
+//! @code{.cpp}
 //!     const safe_array<char> pOrgData{new char], 10};
 //!     char_count i = 0_ch;
 //!     pOrgData[i++] = 'A';
@@ -579,6 +591,7 @@ struct fixed_size_array
 //!     {
 //!         delete[] pOrgData;
 //!     }
+//! @endcode
 template <typename T>
 class safe_array
 {
@@ -703,5 +716,6 @@ T* alloca_array(count_of<T> count)
 	return (T*)alloca(count.to_byte_count());
 }
 
+//! @}
 }
 
