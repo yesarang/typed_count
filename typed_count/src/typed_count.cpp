@@ -69,5 +69,12 @@ int main()
 	{
 		delete[] pOrgData;
 	}
+
+	fixed_size_array<const char, 5> name{"ABCD"};
+	auto pNameCopy = make_safe_array(str_len_s(name) + 1_ch);
+	for (auto i = 0_ch; i < pNameCopy.count() && name[i] != '\0'; ++i)
+	{
+		pNameCopy[i] = name[i];
+	}
 }
 

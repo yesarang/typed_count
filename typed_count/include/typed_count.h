@@ -23,7 +23,7 @@ namespace typed_count
 //!
 //! Usage:
 //! @code{.cpp}
-//!     size_t unit_size = unit_traits<Unit>::size::value;
+//! size_t unit_size = unit_traits<Unit>::size::value;
 //! @endcode
 template <typename T>
 struct unit_traits
@@ -201,6 +201,15 @@ private:
 //! type-safe count of any unit.
 //!
 //! type requirement: unit_traits<T> must be defined and > 0.
+//! <h4>Usage</h4>
+//! @code{.cpp}
+//! fixed_size_array<const char, 5> name{"ABCD"};
+//! auto pNameCopy = make_safe_array(str_len_s(name) + 1_ch);
+//! for (auto i = 0_ch; i < pNameCopy.count() && name[i] != '\0'; ++i)
+//! {
+//!     pNameCopy[i] = name[i];
+//! }
+//! @endcode
 template <typename T>
 class count_of : private count_holder
 {
@@ -538,12 +547,26 @@ constexpr gb_count operator "" _tb(unsigned long long count) noexcept
 //! @defgroup utilities Utilities
 //! Utility functions and classes
 //! @{
+
+//! Returns typed count of an array with a compile-time constant number of element.
 template <typename T, std::size_t N>
 constexpr count_of<T> array_size(T(&)[N]) noexcept
 {
 	return count_of<T>(N);
 }
 
+//! Fixed size array
+//!
+//! Can access to elements using typed count.
+//!
+//! <h4>Usage</h4>
+//! @code
+//! fixed_size_array<char, 10> buf;			// same as char arr[10];
+//! buf[0_ch] = 'A';
+//! buf[1] = 'B';							// won't compile
+//! assert(buf.count() == 10_ch);			// count() returns typed count
+//! char* pBuf = buf;						// supports decaying to pointer
+//! @endcode
 template <typename T, std::size_t N>
 struct fixed_size_array
 {
@@ -576,21 +599,21 @@ struct fixed_size_array
 //! decaying to a plan pointer, and deferencing just like a pointer.
 //! safe_array does not own the pointed-to array.
 //!
-//! <h4>Usage </h4>
+//! <h4>Usage</h4>
 //! @code{.cpp}
-//!     const safe_array<char> pOrgData{new char], 10};
-//!     char_count i = 0_ch;
-//!     pOrgData[i++] = 'A';
-//!     *(pOrgData + i) = 'B';
-//!     safe_array<char> pCurData = pOrgData;
-//!     pCurData += 2_ch;
-//!     pCurData[0_ch] = 'C';
-//!     ++pCurData;
-//!     *pCurData = 'D';
-//!     if (pOrgData)
-//!     {
-//!         delete[] pOrgData;
-//!     }
+//! const safe_array<char> pOrgData{new char], 10};
+//! char_count i = 0_ch;
+//! pOrgData[i++] = 'A';
+//! *(pOrgData + i) = 'B';
+//! safe_array<char> pCurData = pOrgData;
+//! pCurData += 2_ch;
+//! pCurData[0_ch] = 'C';
+//! ++pCurData;
+//! *pCurData = 'D';
+//! if (pOrgData)
+//! {
+//!     delete[] pOrgData;
+//! }
 //! @endcode
 template <typename T>
 class safe_array
