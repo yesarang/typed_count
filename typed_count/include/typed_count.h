@@ -7,12 +7,26 @@
 
 #pragma once
 
+//! Provides type-safe count of various units like char, wchar, Page,
+//! Kb, Mb, Gb, Tb, an etc.
+//!
+//! <h4>Motivation</h4>
+//! We need to count various units like count of bytes, count of wchars, count of buffers,
+//! count of pages, and etc. But they are all expressed as any integral type and
+//! C++ type system does not block you converting an integral type to another integral type
+//! like casting unsigned long to int and passing count of one unit to the parameter
+//! for count of the other unit. So, there are chances that someone makes mistakes.
+//! This module provides a template class which can represent count of any unit but provides type safety
+//! for count of different units.
+//!
+//! <h4>Usage examples</h4>
+//! @include typed_count.cpp
 namespace typed_count
 {
 
 //! @defgroup unit_traits Unit traits
 //! Defines traits of units such as Page,
-//! All unit traits must provides unit size in bytes.
+//! All unit traits must provide unit size in bytes.
 //! @{
 
 //! Default unit traits for a type.
@@ -601,7 +615,7 @@ struct fixed_size_array
 //!
 //! <h4>Usage</h4>
 //! @code{.cpp}
-//! const safe_array<char> pOrgData{new char], 10};
+//! const safe_array<char> pOrgData{new char[10], 10};
 //! char_count i = 0_ch;
 //! pOrgData[i++] = 'A';
 //! *(pOrgData + i) = 'B';
@@ -686,9 +700,14 @@ public:
 		return *pElems_;
 	}
 
-	constexpr operator T* const() const noexcept
+	constexpr T* data() const noexcept
 	{
 		return const_cast<T*>(pElems_);
+	}
+
+	constexpr operator T* const() const noexcept
+	{
+		return data();
 	}
 };
 
