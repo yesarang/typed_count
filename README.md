@@ -22,23 +22,23 @@ for count of different units.
 
   int main()
   {
-	  const wchar_t* pwsz = L"ABCD";
-	  const char* psz = "abcd";
+    const wchar_t* pwsz = L"ABCD";
+    const char* psz = "abcd";
 
-	  // wszlen type is wchar_count
-	  auto wszlen = str_len_s(pwsz);
-	  // szlen type is char_count
-	  auto szlen = str_len_s(psz);
+    // wszlen type is wchar_count
+    auto wszlen = str_len_s(pwsz);
+    // szlen type is char_count
+    auto szlen = str_len_s(psz);
 
-	  // provides make_array() template function, + operator and _wch, _ch literal operators.
-	  // new [] takes only size_t. Need to provide a separate function make_array() to allocate an array.
-	  auto pNewWsz = make_array(wszlen + 1_wch);
-	  auto pNewSz = make_array(szlen + 1_ch);
+    // provides make_array() template function, + operator and _wch, _ch literal operators.
+    // new [] takes only size_t. Need to provide a separate function make_array() to allocate an array.
+    auto pNewWsz = make_array(wszlen + 1_wch);
+    auto pNewSz = make_array(szlen + 1_ch);
 
-	  // This must not compile since szlen is not the type which str_cpy_s(... wchar_count) requires
-	  // str_cpy_s(pwsz, pNewWsz, szlen);
+    // This must not compile since szlen is not the type which str_cpy_s(... wchar_count) requires
+    // str_cpy_s(pwsz, pNewWsz, szlen);
 
-	  // str_cpy_s() is a type-safe version of strcpy() and wcscpy().
+    // str_cpy_s() is a type-safe version of strcpy() and wcscpy().
     str_cpy_s(pwsz, pNewWsz, 1_wch + wszlen);
     printf("%ls\n", pNewWsz);
 
