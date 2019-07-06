@@ -15,13 +15,14 @@ for count of different units.
 
 ## Usage
 
-  #include "typed_count.h"
 
-  using namespace std;
-  using namespace typed_count;
+    #include "typed_count.h"
 
-  int main()
-  {
+    using namespace std;
+    using namespace typed_count;
+
+    int main()
+    {
     const wchar_t* pwsz = L"ABCD";
     const char* psz = "abcd";
 
@@ -68,4 +69,4 @@ for count of different units.
     cout << "pages to kb = " << no_of_pages.to_count_of<Kb>() << endl;
     cout << "pages to mb = " << no_of_pages.to_count_of<Mb>() << endl;
     cout << "pages to bytes = " << no_of_pages.to_count_of<byte>() << endl;
-  }
+    }
