@@ -80,3 +80,5 @@ for count of different units, basically defining a separate type per count of an
       cout << "pages to mb = " << no_of_pages.to_count_of<Mb>() << endl;
       cout << "pages to bytes = " << no_of_pages.to_count_of<byte>() << endl;
     }
+
+Please, refer to src/typed_count.cpp for more usage examples.
