@@ -13,10 +13,10 @@
 //! <h4>Motivation</h4>
 //! We need to count various units like count of bytes, count of wchars, count of buffers,
 //! count of pages, and etc. But they are all expressed as any integral type and
-//! C++ type system does not block you converting an integral type to another integral type
+//! C++ type system does not block us converting an integral type to another integral type
 //! like casting unsigned long to int and passing count of one unit to the parameter
 //! for count of the other unit. So, there are chances that someone makes mistakes.
-//! This module provides a template class which can represent count of any unit but provides type safety
+//! This library provides a template class which can represent count of any unit but provides type safety
 //! for count of different units.
 //!
 //! <h4>Usage examples</h4>
