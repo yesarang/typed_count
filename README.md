@@ -16,7 +16,7 @@ for count of the other unit. So, there are chances that someone makes mistakes l
 	memcpy(c, s, sizeof(s));            // Oops! sizeof(s) == 10 bytes but c has only 5 bytes.
 	                                    // memcpy just requires size_t.
 
-The above example is a theoretical simplified one and yet could be a very dangerous security risk:
+The above example is a theoretical simplified one and yet could be a very dangerous *security risk*:
 buffer overrun and in a large code base, a similar mistake can be
 made due to a deep call chain and the fact that size by bytes and size by wchar_t are represented
 as any integral type.
