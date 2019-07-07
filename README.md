@@ -1,10 +1,12 @@
-# typed_count
+typed_count
+===========
 Type-safe unit count template library
 
 This library provides type-safe count of various units like char, wchar, Page,
 Kb, Mb, Gb, Tb, an etc.
 
-## Motivation
+Motivation
+----------
 We need to count various units like count of bytes, count of wchars, count of buffers,
 count of pages, and etc. But they are all expressed as any integral type and
 C++ type system does not block us converting an integral type to another integral type
@@ -24,7 +26,8 @@ as any integral type.
 This library provides a template class which can represent count of any unit but provides type safety
 for count of different units, basically defining a separate type per count of an unit.
 
-## Usage
+Usage
+-----
 
     #include "typed_count.h"
 
