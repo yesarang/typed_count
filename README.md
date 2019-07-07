@@ -13,10 +13,12 @@ C++ type system does not block us converting an integral type to another integra
 like casting unsigned long to int and passing count of one unit to the parameter
 for count of the other unit. So, there are chances that someone makes mistakes like...
 
+```cpp
     wchar_t s{ L"ABCD" };
 	auto c = new char[wcslen(s) + 1];   // wcslen() returns size_t and new[] operator requires size_t.
 	memcpy(c, s, sizeof(s));            // Oops! sizeof(s) == 10 bytes but c has only 5 bytes.
 	                                    // memcpy just requires size_t.
+```
 
 The above example is a theoretical simplified one and yet could be a very dangerous **security risk**:
 buffer overrun and in a large code base, a similar mistake can be
@@ -29,6 +31,7 @@ for count of different units, basically defining a separate type per count of an
 Usage
 -----
 
+```cpp
     #include "typed_count.h"
 
     using namespace std;
@@ -83,5 +86,6 @@ Usage
       cout << "pages to mb = " << no_of_pages.to_count_of<Mb>() << endl;
       cout << "pages to bytes = " << no_of_pages.to_count_of<byte>() << endl;
     }
+```
 
 Please, refer to src/typed_count.cpp for more usage examples.
