@@ -9,9 +9,20 @@ We need to count various units like count of bytes, count of wchars, count of bu
 count of pages, and etc. But they are all expressed as any integral type and
 C++ type system does not block us converting an integral type to another integral type
 like casting unsigned long to int and passing count of one unit to the parameter
-for count of the other unit. So, there are chances that someone makes mistakes.
+for count of the other unit. So, there are chances that someone makes mistakes like...
+
+    wchar_t s{ L"ABCD" };
+	auto c = new char[wcslen(s) + 1];   // wcslen() returns size_t and new[] operator requires size_t.
+	memcpy(c, s, sizeof(s));            // Oops! sizeof(s) == 10 bytes but c has only 5 bytes.
+	                                    // memcpy just requires size_t.
+
+The above example is a theoretical simplified one and yet could be a very dangerous security risk:
+buffer overrun and in a large code base, a similar mistake can be
+made due to a deep call chain and the fact that size by bytes and size by wchar_t are represented
+as any integral type.
+
 This library provides a template class which can represent count of any unit but provides type safety
-for count of different units.
+for count of different units, basically defining a separate type per count of an unit.
 
 ## Usage
 
